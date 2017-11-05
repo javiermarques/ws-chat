@@ -9,6 +9,7 @@ $(function () {
     '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
   ];
   var $messages = $('.messages'); // Messages area
+  var socket = io();
   // Keyboard events
 var $window = $(window);
   $window.keydown(function (event) {
@@ -37,7 +38,7 @@ var $window = $(window);
       //$currentInput = $('.inputMessage').focus();
 
       // Tell the server your username
-      io().emit('add user', username);
+      socket.emit('add user', username);
     }
   }
   // Sends a chat message
@@ -52,7 +53,7 @@ var $window = $(window);
         message: message
       });
       // tell server to execute 'new message' and send along one parameter
-      io().emit('new message', message);
+      socket.emit('new message', message);
     }
   }
 
@@ -131,14 +132,14 @@ var $window = $(window);
   }
 // Socket events
   // Whenever the server emits 'user joined', log it in the chat body
-  io().on('user joined', function (data) {
+  socket.on('user joined', function (data) {
     //log(data.username + ' joined');
     //addParticipantsMessage(data);
     console.log(data);
   });
 
   // Whenever the server emits 'new message', update the chat body
-  io().on('new message', function (data) {
+  socket.on('new message', function (data) {
     addChatMessage(data);
   });
   });

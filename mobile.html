@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Socket.IO Chat Example</title>
+</head>
+<body>
+  <button type="button">Hello</button>
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    params={};location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi,function(s,k,v){params[k]=v});
+$(function () {
+    var socket = io();
+    $('button').click(function (event) {
+      socket.emit('private message', 'Hello World!', params.id);
+      //$('#m').val('');
+      return false;
+    });
+  });
+  </script>
+</body>
+</html>
